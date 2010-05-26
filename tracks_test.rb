@@ -6,4 +6,4 @@ client = Tracks::Client.new(auth["username"], auth["password"])
 
 interface = Tracks::Interface.new(client)
 
-interface.list_todos_by_context
+interface.list_todos_by_context(6)
