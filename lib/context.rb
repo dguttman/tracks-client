@@ -1,17 +1,5 @@
-require 'ostruct'
+class Context < ActiveRecord::Base
 
-module Tracks
-  
-  class Context < OpenStruct
-    def initialize(parent, hash)
-      @parent = parent
-      super(hash)
-    end
-    
-    def todos
-      @parent.context_todos(self.id)
-    end
-    
-  end
+  has_many :todos
   
 end
