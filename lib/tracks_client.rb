@@ -33,6 +33,18 @@ module Tracks
       RemoteProject.find(:all)
     end
     
+    def todos
+      Todo.find(:all)
+    end
+    
+    def contexts
+      Context.find(:all)
+    end
+    
+    def projects
+      Project.find(:all)
+    end
+    
     def sync_to_local
       sync_todos_to_local
       sync_contexts_to_local
