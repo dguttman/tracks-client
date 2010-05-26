@@ -7,6 +7,9 @@ class CreateProjects < ActiveRecord::Migration
       t.integer :default_context_id
       t.string :description
       t.string :state
+      t.datetime :completed_at
+      t.datetime :created_at
+      t.datetime :updated_at
     end
   end
 

@@ -5,6 +5,8 @@ class CreateContexts < ActiveRecord::Migration
       t.string :name
       t.integer :position
       t.boolean :hide
+      t.datetime :created_at
+      t.datetime :updated_at
     end
   end
 

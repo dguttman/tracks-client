@@ -4,36 +4,65 @@ require 'active_record'
 require 'active_resource'
 require 'yaml'
 
-Dir["tracks_client/*.rb"].each {|file| require file }
-
+load_dir = File.join(File.dirname(__FILE__), 'tracks_client')
+Dir["#{load_dir}/*.rb"].each {|file| require file }
 
 module Tracks
 
   class Client
     
-    attr_reader :remote_todos, :remote_contexts, :remote_projects
+    attr_reader :remote_queue, :local_queue
+    
     
     def initialize      
       init_active_resource
       init_active_record
+      @remote_queue = []
+      @local_queue = []
+    end
+    
+    def remote_todos
+      RemoteTodo.find(:all)
+    end
+    
+    def remote_contexts
+      RemoteContext.find(:all)
+    end
+    
+    def remote_projects
+      RemoteProject.find(:all)
     end
     
     def sync_to_local
       sync_todos_to_local
-      # sync_contexts_to_local
+      sync_contexts_to_local
+      sync_projects_to_local
+    end
+    
+    def process_remote_queue
+      @remote_queue.each do |item|
+        p item.class
+      end
     end
     
     def sync_todos_to_local
       @remote_todos = RemoteTodo.find(:all)
       @remote_todos.each do |remote_todo|
-        Todo.create(remote_todo.ar_attributes)
+        todo = Todo.new_from_remote(remote_todo)
       end      
     end
 
     def sync_contexts_to_local
       @remote_contexts = RemoteContext.find(:all)
       @remote_contexts.each do |remote_context|
-        Context.create(remote_context.ar_attributes)
+        context = Context.new_from_remote(remote_context)
+      end
+    end
+    
+    def sync_projects_to_local
+      @remote_projects = RemoteProject.find(:all)
+      @remote_projects.each do |remote_project|
+        project = Project.new_from_remote(remote_project)
       end
     end
     
@@ -43,7 +72,7 @@ module Tracks
       auth = YAML.load_file(File.join(ENV["HOME"], ".tracks_client"))
       username, password = auth["username"], auth["password"]
       site = "http://#{username}:#{password}@dgtracks.heroku.com/"
-      Tracks::Base.site = site
+      Tracks::RemoteBase.site = site
     end
     
     def init_active_record
