@@ -1,9 +1,11 @@
 class CreateTodos < ActiveRecord::Migration
   def self.up
     create_table :todos do |t|
-      t.integer :remote_todo_id
+      t.integer :remote_id
       t.integer :remote_context_id
       t.integer :remote_project_id
+      t.integer :context_id
+      t.integer :project_id
       t.datetime :completed_at
       t.integer :recurring_todo_id
       t.datetime :show_from

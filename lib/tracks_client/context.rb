@@ -1,12 +1,12 @@
 module Tracks
   class Context < ActiveRecord::Base
 
-    validates_uniqueness_of :remote_context_id
+    validates_uniqueness_of :remote_id
 
     has_many :todos
 
     def self.new_from_remote(remote_context)
-      existing_context = self.find_by_remote_context_id(remote_context.id)
+      existing_context = self.find_by_remote_id(remote_context.id)
       if existing_context
         existing_time = existing_context.updated_at
         remote_time = remote_context.updated_at
@@ -21,7 +21,7 @@ module Tracks
     end
   
     def remote_context
-      RemoteContext.find(:first, :params => {:id => self.remote_context_id})
+      RemoteContext.find(:first, :params => {:id => self.remote_id})
     end
   
   end

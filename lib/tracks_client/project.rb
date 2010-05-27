@@ -1,12 +1,12 @@
 module Tracks
   class Project < ActiveRecord::Base
   
-    validates_uniqueness_of :remote_project_id
+    validates_uniqueness_of :remote_id
   
     has_many :todos
   
     def self.new_from_remote(remote_project)
-      existing_project = self.find_by_remote_project_id(remote_project.id)
+      existing_project = self.find_by_remote_id(remote_project.id)
       if existing_project
         existing_time = existing_project.updated_at
         remote_time = remote_project.updated_at
@@ -21,7 +21,7 @@ module Tracks
     end
   
     def remote_project
-      RemoteProject.find(:first, :params => {:id => self.remote_project_id})
+      RemoteProject.find(:first, :params => {:id => self.remote_id})
     end
   
   end

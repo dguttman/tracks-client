@@ -1,7 +1,7 @@
 class CreateProjects < ActiveRecord::Migration
   def self.up
     create_table :projects do |t|
-      t.integer :remote_project_id
+      t.integer :remote_id
       t.integer :position
       t.string :name
       t.integer :default_context_id

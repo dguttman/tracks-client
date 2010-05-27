@@ -4,7 +4,7 @@ module Tracks
   class RemoteBase < ActiveResource::Base
     
     def ar_attributes
-      ar_attributes = attributes.merge({"remote_#{self.class.element_name}_id" => self.id})
+      ar_attributes = attributes.merge({"remote_id" => self.id})
       
       ar_attributes.delete("id")
       ar_attributes.delete("created_at")
