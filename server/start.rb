@@ -11,10 +11,11 @@ UPDATE_FREQ_MINS = 1
 Thread.new do
   while true
     sleep 60 * UPDATE_FREQ_MINS
-    p "Syncing !! "
+    p "!! Syncing to local !!"
     $client.sync_to_local
+    p "!! Syncing to remote !!"
     $client.sync_to_remote
-    p "Sync Complete"
+    p "!! Sync Complete !!"
   end
 end
 
@@ -26,7 +27,7 @@ end
 post '/todos' do
   @context = Context.find_by_name(params[:context][:name])
   @todo = @context.todos.create(params[:todo])
-  @todo.description
+  redirect '/'
 end
 
 get '/sync' do
