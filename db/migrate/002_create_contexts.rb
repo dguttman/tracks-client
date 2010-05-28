@@ -7,6 +7,7 @@ class CreateContexts < ActiveRecord::Migration
       t.boolean :hide
       t.datetime :created_at
       t.datetime :updated_at
+      t.datetime :synced_at
     end
   end
 

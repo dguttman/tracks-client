@@ -46,9 +46,9 @@ module Tracks
     end
     
     def sync_to_local
-      sync_todos_to_local
       sync_contexts_to_local
       sync_projects_to_local
+      sync_todos_to_local
     end
     
     def process_remote_queue
@@ -57,11 +57,28 @@ module Tracks
       end
     end
     
-    def sync_todos_to_local
-      @remote_todos = RemoteTodo.find(:all)
-      @remote_todos.each do |remote_todo|
-        todo = Todo.new_from_remote(remote_todo)
-      end      
+    def sync_to_remote
+      sync_contexts_to_remote
+      sync_projects_to_remote
+      sync_todos_to_remote
+    end
+    
+    def sync_contexts_to_remote
+      self.contexts.each do |context|
+        context.sync_to_remote
+      end
+    end
+    
+    def sync_projects_to_remote
+      self.projects.each do |project|
+        project.sync_to_remote
+      end
+    end
+    
+    def sync_todos_to_remote
+      self.todos.each do |todo|
+        todo.sync_to_remote
+      end
     end
 
     def sync_contexts_to_local
@@ -78,6 +95,15 @@ module Tracks
       end
     end
     
+    def sync_todos_to_local
+      @remote_todos = RemoteTodo.find(:all)
+      @remote_todos.each do |remote_todo|
+        todo = Todo.new_from_remote(remote_todo)
+      end      
+    end
+
+
+    
   private
     
     def init_active_resource
@@ -90,7 +116,7 @@ module Tracks
     def init_active_record
       dbconfig = YAML::load(File.open('database.yml'))
       ActiveRecord::Base.establish_connection(dbconfig)
-      ActiveRecord::Base.logger = Logger.new(STDOUT)
+      ActiveRecord::Base.logger = Logger.new("log/development.log")
     end
 
   end

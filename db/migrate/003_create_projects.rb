@@ -10,6 +10,7 @@ class CreateProjects < ActiveRecord::Migration
       t.datetime :completed_at
       t.datetime :created_at
       t.datetime :updated_at
+      t.datetime :synced_at
     end
   end
 

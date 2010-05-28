@@ -1,13 +1,15 @@
 require File.expand_path(File.join(File.dirname(__FILE__), 'spec_helper'))
 
-describe Tracks::Client do
+include Tracks
+
+describe Client do
   
   before do
-    @client = Tracks::Client.new 
+    @client = Client.new 
   end
   
   it "creates a client" do
-    @client.class.should == Tracks::Client
+    @client.class.should == Client
   end
 
   it "shows remote todos, contexts, projects" do
@@ -21,8 +23,20 @@ describe Tracks::Client do
     remote_projects.class.should == Array
   end
   
-  it "syncs todos to local" do
-    @client.sync_todos_to_local
+  it "syncs to remote" do
+    @client.sync_to_remote
+  end
+  
+  it "syncs contexts to remote" do
+    @client.sync_contexts_to_remote
+  end
+
+  it "syncs projects to remote" do
+    @client.sync_projects_to_remote
+  end
+  
+  it "syncs todos to remote" do
+    @client.sync_todos_to_remote
   end
   
   it "syncs contexts to local" do
@@ -31,6 +45,10 @@ describe Tracks::Client do
 
   it "syncs projects to local" do
     @client.sync_projects_to_local
+  end
+  
+  it "syncs todos to local" do
+    @client.sync_todos_to_local
   end
   
   it "shows local todos, contexts, and projects" do
@@ -42,11 +60,6 @@ describe Tracks::Client do
     
     projects = @client.projects
     projects.class.should == Array
-  end
-
-  it "processes remote queue" do
-    @client.sync_to_local
-    @client.process_remote_queue
   end
   
 end
