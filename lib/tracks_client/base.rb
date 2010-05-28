@@ -11,10 +11,14 @@ module Tracks
       if existing
         update_existing_with_remote(existing, remote)
       else
-        local = self.new(remote.ar_attributes)
-        local.synced_at = Time.now
-        return local.save
+        create_new_with_remote(remote)
       end
+    end
+    
+    def self.create_new_with_remote(remote)
+      local = self.new(remote.ar_attributes)
+      local.synced_at = Time.now
+      return local.save
     end
     
     def self.update_existing_with_remote(existing, remote)

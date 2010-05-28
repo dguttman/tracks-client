@@ -11,7 +11,7 @@ describe Todo do
   it "should have the same data as its remote todo" do
     @todos = @client.todos
     @todos.each do |local_todo|
-      remote_todo = local_todo.remote_todo
+      remote_todo = local_todo.remote
       local_todo.description.should == remote_todo.description
     end
   end
