@@ -43,14 +43,20 @@ module Tracks
     end
     
     def sync_to_local
+      p "syncing contexts to local"
       sync_contexts_to_local
+      p "syncing projects to local"
       sync_projects_to_local
+      p "syncing todos to local"
       sync_todos_to_local
     end
     
     def sync_to_remote
+      p "syncing contexts to remote"
       sync_contexts_to_remote
+      p "syncing projects to remote"
       sync_projects_to_remote
+      p "syncing todos to remote"
       sync_todos_to_remote
     end
     
@@ -73,8 +79,11 @@ module Tracks
     end
 
     def sync_contexts_to_local
+      p "finding remote contexts"
       @remote_contexts = RemoteContext.find(:all)
+      p "creating local contexts from remote"
       @remote_contexts.each do |remote_context|
+        p "checking remote_context: #{remote_context.name}"
         context = Context.new_from_remote(remote_context)
       end
     end
