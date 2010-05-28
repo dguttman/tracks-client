@@ -6,9 +6,12 @@ require 'sass'
 Client = Tracks::Client.new
 
 get '/' do
-  
   @todos = Client.todos
   haml :index
+end
+
+post '/todos' do
+  params[:todo][:description].to_s
 end
 
 get '/contexts' do

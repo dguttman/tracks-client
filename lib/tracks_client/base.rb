@@ -72,7 +72,6 @@ module Tracks
       ar_attributes.delete("updated_at")
       ar_attributes.delete("synced_at")
       ar_attributes.delete_if { |k,v| v.nil? }
-      ap ar_attributes
       
       ar_attributes
     end

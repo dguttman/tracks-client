@@ -13,12 +13,9 @@ module Tracks
     
     attr_reader :remote_queue, :local_queue
     
-    
     def initialize      
       init_active_resource
       init_active_record
-      @remote_queue = []
-      @local_queue = []
     end
     
     def remote_todos
@@ -49,12 +46,6 @@ module Tracks
       sync_contexts_to_local
       sync_projects_to_local
       sync_todos_to_local
-    end
-    
-    def process_remote_queue
-      @remote_queue.each do |item|
-        p item.class
-      end
     end
     
     def sync_to_remote
@@ -102,21 +93,19 @@ module Tracks
       end      
     end
 
-
-    
   private
     
     def init_active_resource
-      auth = YAML.load_file(File.join(ENV["HOME"], ".tracks_client"))
-      username, password = auth["username"], auth["password"]
-      site = "http://#{username}:#{password}@dgtracks.heroku.com/"
+      config = YAML.load_file(File.join(ENV["HOME"], ".tracks_client"))
+      username, password, host = config["username"], config["password"], config["host"]
+      site = "http://#{username}:#{password}@#{host}/"
       Tracks::RemoteBase.site = site
     end
     
     def init_active_record
       dbconfig = YAML::load(File.open('database.yml'))
       ActiveRecord::Base.establish_connection(dbconfig)
-      ActiveRecord::Base.logger = Logger.new("log/development.log")
+      ActiveRecord::Base.logger = Logger.new("log/database.log")
     end
 
   end

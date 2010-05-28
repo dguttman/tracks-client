@@ -1,3 +1,5 @@
-- @todos.each do |todo|
-  .todo
-    = todo.description
+%form{:name => "todo", :method => "post", :id => "todo-form-new-action", :class => "inline-form", :action => "/todos" }
+  %label{:for => "todo_description"}
+    Description
+  %input{:type => "text", :tabindex => "1", :size => "30", :name => "todo[description]", :maxlength => "100", :id => "todo_description"}
+  %input{:id => "todo_new_action_submit", :class => "positive", :type => "submit", :value => "Add Action"}
