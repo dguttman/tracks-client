@@ -1,3 +1,5 @@
+require File.join(File.dirname(__FILE__), 'remote_base')
+
 module Tracks
   
   class RemoteProject < RemoteBase
