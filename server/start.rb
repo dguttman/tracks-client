@@ -3,19 +3,27 @@ require 'sinatra'
 require 'haml'
 require 'sass'
 
-Client = Tracks::Client.new
+include Tracks
+$client = Client.new
 
 get '/' do
-  @todos = Client.todos
+  @first_context = Context.find_by_position(1)
   haml :index
 end
 
 post '/todos' do
-  params[:todo][:description].to_s
+  @context = Context.find_by_name(params[:context][:name])
+  @todo = @context.todos.create(params[:todo])
+  @todo.description
+end
+
+get '/sync' do
+  $client.sync_to_local
+  $client.sync_to_remote
 end
 
 get '/contexts' do
-  @contexts = Client.contexts
+  @contexts = $client.contexts
 end
 
 # SASS stylesheet
