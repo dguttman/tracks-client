@@ -6,6 +6,18 @@ require 'sass'
 include Tracks
 $client = Client.new
 
+UPDATE_FREQ_MINS = 1
+
+Thread.new do
+  while true
+    sleep 60 * UPDATE_FREQ_MINS
+    p "Syncing !! "
+    $client.sync_to_local
+    $client.sync_to_remote
+    p "Sync Complete"
+  end
+end
+
 get '/' do
   @first_context = Context.find_by_position(1)
   haml :index
