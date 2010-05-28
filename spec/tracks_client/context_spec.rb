@@ -11,7 +11,7 @@ describe Context do
   it "should have the same data as its remote context" do
     @contexts = @client.contexts
     @contexts.each do |local_context|
-      remote_context = local_context.remote_context
+      remote_context = local_context.remote
       local_context.name.should == remote_context.name
     end
   end

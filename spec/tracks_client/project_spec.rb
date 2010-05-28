@@ -11,7 +11,7 @@ describe Project do
   it "should have the same data as its remote project" do
     @projects = @client.projects
     @projects.each do |local_project|
-      remote_project = local_project.remote_project
+      remote_project = local_project.remote
       local_project.name.should == remote_project.name
     end
   end

@@ -11,14 +11,14 @@ describe Client do
   it "creates a client" do
     @client.class.should == Client
   end
-
+  
   it "shows remote todos, contexts, projects" do
     remote_todos = @client.remote_todos
     remote_todos.class.should == Array
-
+  
     remote_contexts = @client.remote_contexts
     remote_contexts.class.should == Array
-
+  
     remote_projects = @client.remote_projects
     remote_projects.class.should == Array
   end
@@ -30,7 +30,7 @@ describe Client do
   it "syncs contexts to remote" do
     @client.sync_contexts_to_remote
   end
-
+  
   it "syncs projects to remote" do
     @client.sync_projects_to_remote
   end
@@ -42,7 +42,7 @@ describe Client do
   it "syncs contexts to local" do
     @client.sync_contexts_to_local
   end
-
+  
   it "syncs projects to local" do
     @client.sync_projects_to_local
   end
